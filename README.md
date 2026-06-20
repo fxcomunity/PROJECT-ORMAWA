@@ -2,48 +2,75 @@
 
 Sistem informasi keanggotaan ORMAWA berbasis PHP & MySQL.
 
-## Cara Install Project
+## Cara Install Project (Buat Pemula Banget)
 
-Berikut langkah-langkah untuk menjalankan project ini di komputer lokal.
+Tenang, ikuti aja langkah-langkah ini satu-satu pelan-pelan. Nggak perlu jago komputer, yang penting teliti dan jangan buru-buru ya! 😊
 
-### 1. Clone Repository
+### Langkah 1: Buka "CMD" (tempat ngetik perintah komputer)
+
+CMD itu kayak kotak ajaib tempat kita ngetik perintah buat komputer. Caranya buka:
+
+1. Tekan tombol **Windows** + **R** secara bersamaan di keyboard.
+2. Nanti muncul kotak kecil. Ketik `cmd` di kotak itu.
+3. Tekan **Enter**.
+4. Muncul jendela hitam-hitam. Itu namanya CMD. Jangan takut, itu cuma tempat ngetik perintah aja.
+
+### Langkah 2: Pindah ke folder tempat nyimpen project
+
+Di CMD yang sudah terbuka, ketik perintah ini, lalu tekan **Enter**:
+
+```bash
+cd C:\laragon\www
+```
+
+Ini artinya "pindah ke folder `www` di dalam Laragon". Folder ini tempat semua project website kita disimpan.
+
+### Langkah 3: Download project dari GitHub (namanya "clone")
+
+Sekarang kita mau ambil/download semua file project dari GitHub ke komputer kita. Caranya:
+
+1. Buka halaman repository GitHub project ini di browser.
+2. Cari tombol hijau yang namanya **"Code"**, klik tombol itu.
+3. Copy link yang muncul (biasanya diakhiri `.git`), contohnya:
+
+```
+https://github.com/username/ORMAWA.git
+```
+
+4. Balik lagi ke CMD yang masih terbuka tadi. Ketik `git clone` lalu **spasi**, lalu **paste** link yang sudah di-copy. Jadinya kira-kira seperti ini:
 
 ```bash
 git clone https://github.com/username/ORMAWA.git
+```
+
+5. Tekan **Enter**. Tunggu sebentar sampai proses download selesai. Nanti muncul folder baru bernama `ORMAWA` di dalam `C:\laragon\www`.
+
+> 💡 Kalau muncul tulisan error seperti `'git' is not recognized`, itu artinya **Git** belum terinstall di komputer kamu. Download dulu di [git-scm.com](https://git-scm.com/), install seperti install aplikasi biasa (next-next-next aja), baru ulangi langkah ini.
+
+### Langkah 4: Masuk ke folder project-nya
+
+Masih di CMD yang sama, ketik:
+
+```bash
 cd ORMAWA
 ```
 
-> Ganti URL di atas dengan URL repository kamu yang sebenarnya.
+lalu tekan **Enter**. Ini artinya "masuk ke dalam folder ORMAWA yang baru di-download".
 
-### 2. Pindahkan ke Folder Web Server
+### Langkah 5: Buat database-nya
 
-Jika menggunakan **Laragon**, pastikan folder project berada di:
+Database itu tempat nyimpen data, kayak data anggota, login, dll. Caranya:
 
-```
-C:\laragon\www\ORMAWA
-```
+1. Buka **Laragon**, klik tombol **Start All** (biar Apache & MySQL nyala, tandanya jadi warna hijau).
+2. Buka browser, ketik di address bar: `localhost/phpmyadmin`
+3. Klik menu **"New"** / **"Baru"** di sebelah kiri.
+4. Ketik nama database, misalnya `ormawa`, lalu klik **Create**.
+5. Kalau ada file `.sql` di dalam project (biasanya nama file-nya seperti `ormawa.sql`), klik database yang baru dibuat, lalu klik tab **Import**, pilih file `.sql` tersebut, lalu klik **Go** di bagian bawah.
+6. Kalau belum ada file `.sql`, kamu bisa bikin tabel manual pakai query yang ada di bagian [Struktur Tabel](#struktur-tabel) di bawah halaman ini. Tinggal copy-paste ke kotak **SQL** di phpMyAdmin lalu klik **Go**.
 
-Jika clone langsung ke folder tersebut, langkah ini bisa dilewati.
+### Langkah 6: Atur koneksi ke database
 
-### 3. Setup Database
-
-1. Buka **phpMyAdmin** atau **HeidiSQL** (bawaan Laragon), lalu buat database baru, misalnya:
-
-```sql
-CREATE DATABASE ormawa;
-```
-
-2. Import struktur tabel. Jika tersedia file `.sql` (misal `ormawa.sql`), import melalui phpMyAdmin, atau lewat terminal:
-
-```bash
-mysql -u root -p ormawa < ormawa.sql
-```
-
-3. Jika belum ada file `.sql`, buat tabel secara manual menggunakan query pada bagian [Struktur Tabel](#struktur-tabel) di bawah.
-
-### 4. Konfigurasi Koneksi Database
-
-Buka file koneksi database project (umumnya ada di folder `koneksi/`, misal `koneksi/koneksi.php`), lalu sesuaikan dengan konfigurasi lokal:
+Buka folder project (`ORMAWA`) pakai aplikasi seperti **VS Code**. Cari file koneksi database, biasanya ada di folder `koneksi/`. Buka filenya, lalu pastikan isinya seperti ini:
 
 ```php
 <?php
@@ -60,37 +87,29 @@ if (!$koneksi) {
 ?>
 ```
 
-> Sesuaikan `$user`, `$pass`, dan `$db` dengan konfigurasi MySQL di komputer kamu.
+> Kalau nama database kamu beda (bukan `ormawa`), ganti bagian `$db` sesuai nama database yang kamu buat di Langkah 5.
 
-### 5. Install Dependency (Vendor / FPDF)
+### Langkah 7: Pasang library FPDF (buat fitur cetak PDF)
 
-Project ini membutuhkan library **FPDF** untuk fitur export PDF. Folder `vendor` tidak disertakan di repository, sehingga perlu di-setup ulang. Lihat panduan lengkapnya di bagian [Dependency: FPDF (Vendor)](#dependency-fpdf-vendor) di bawah.
+Project ini butuh "alat tambahan" namanya FPDF, supaya bisa cetak/export PDF. Cara pasangnya ada lengkap di bagian [Dependency: FPDF (Vendor)](#dependency-fpdf-vendor) di bawah. Ikuti aja salah satu caranya (boleh pakai Composer, boleh download manual).
 
-Cara cepat (lewat Composer):
+### Langkah 8: Buka website-nya! 🎉
 
-```bash
-composer require setasign/fpdf
-```
-
-### 6. Jalankan Project
-
-Pastikan **Laragon** (atau Apache + MySQL) sudah berjalan, lalu buka browser dan akses:
+1. Pastikan **Laragon** masih nyala (tombol Start All tadi).
+2. Buka browser, ketik:
 
 ```
 http://localhost/ORMAWA/index.php
 ```
 
-atau jika menggunakan PHP built-in server:
+3. Kalau muncul tampilan website, berarti **berhasil!** 🎊
 
-```bash
-php -S localhost:8000
-```
+### Langkah 9: Coba daftar & login
 
-lalu buka `http://localhost:8000`.
+- Buka halaman `registrasi.php` dulu buat bikin akun baru.
+- Habis itu buka `login.php` buat masuk pakai akun yang baru dibuat.
 
-### 7. Cek Login / Registrasi
-
-Buka halaman `registrasi.php` untuk membuat akun anggota baru, lalu login melalui `login.php` untuk mengakses sistem.
+Selesai! Kalau ada error, baca pesan errornya baik-baik, biasanya kasih tau bagian mana yang salah (misal koneksi database, atau file yang nggak ketemu).
 
 ---
 
