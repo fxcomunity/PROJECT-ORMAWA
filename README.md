@@ -112,15 +112,21 @@ composer install
 
 1. Buka halaman download resmi FPDF: [https://www.fpdf.org/en/dl.php?v=186&f=zip](https://www.fpdf.org/en/dl.php?v=186&f=zip)
 2. Extract file zip yang didownload.
-3. Salin folder hasil extract ke dalam folder `vendor/fpdf` pada root project, sehingga strukturnya menjadi:
+3. Salin seluruh isi hasil extract ke dalam folder `vendor` pada root project, sehingga strukturnya menjadi:
 
 ```
 ORMAWA/
 ├── vendor/
-│   └── fpdf/
-│       ├── fpdf.php
-│       ├── font/
-│       └── ...
+│   ├── doc/
+│   ├── font/
+│   ├── makefont/
+│   ├── tutorial/
+│   ├── changelog.htm
+│   ├── FAQ.htm
+│   ├── fpdf.css
+│   ├── fpdf.php
+│   ├── install.txt
+│   └── license.txt
 ├── pages/
 ├── koneksi/
 ├── index.php
@@ -130,7 +136,7 @@ ORMAWA/
 4. Include file utamanya di kode PHP:
 
 ```php
-require('vendor/fpdf/fpdf.php');
+require('vendor/fpdf.php');
 
 $pdf = new FPDF();
 $pdf->AddPage();
