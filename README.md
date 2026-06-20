@@ -1,3 +1,99 @@
+# ORMAWA
+
+Sistem informasi keanggotaan ORMAWA berbasis PHP & MySQL.
+
+## Cara Install Project
+
+Berikut langkah-langkah untuk menjalankan project ini di komputer lokal.
+
+### 1. Clone Repository
+
+```bash
+git clone https://github.com/username/ORMAWA.git
+cd ORMAWA
+```
+
+> Ganti URL di atas dengan URL repository kamu yang sebenarnya.
+
+### 2. Pindahkan ke Folder Web Server
+
+Jika menggunakan **Laragon**, pastikan folder project berada di:
+
+```
+C:\laragon\www\ORMAWA
+```
+
+Jika clone langsung ke folder tersebut, langkah ini bisa dilewati.
+
+### 3. Setup Database
+
+1. Buka **phpMyAdmin** atau **HeidiSQL** (bawaan Laragon), lalu buat database baru, misalnya:
+
+```sql
+CREATE DATABASE ormawa;
+```
+
+2. Import struktur tabel. Jika tersedia file `.sql` (misal `ormawa.sql`), import melalui phpMyAdmin, atau lewat terminal:
+
+```bash
+mysql -u root -p ormawa < ormawa.sql
+```
+
+3. Jika belum ada file `.sql`, buat tabel secara manual menggunakan query pada bagian [Struktur Tabel](#struktur-tabel) di bawah.
+
+### 4. Konfigurasi Koneksi Database
+
+Buka file koneksi database project (umumnya ada di folder `koneksi/`, misal `koneksi/koneksi.php`), lalu sesuaikan dengan konfigurasi lokal:
+
+```php
+<?php
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "ormawa";
+
+$koneksi = mysqli_connect($host, $user, $pass, $db);
+
+if (!$koneksi) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
+?>
+```
+
+> Sesuaikan `$user`, `$pass`, dan `$db` dengan konfigurasi MySQL di komputer kamu.
+
+### 5. Install Dependency (Vendor / FPDF)
+
+Project ini membutuhkan library **FPDF** untuk fitur export PDF. Folder `vendor` tidak disertakan di repository, sehingga perlu di-setup ulang. Lihat panduan lengkapnya di bagian [Dependency: FPDF (Vendor)](#dependency-fpdf-vendor) di bawah.
+
+Cara cepat (lewat Composer):
+
+```bash
+composer require setasign/fpdf
+```
+
+### 6. Jalankan Project
+
+Pastikan **Laragon** (atau Apache + MySQL) sudah berjalan, lalu buka browser dan akses:
+
+```
+http://localhost/ORMAWA/index.php
+```
+
+atau jika menggunakan PHP built-in server:
+
+```bash
+php -S localhost:8000
+```
+
+lalu buka `http://localhost:8000`.
+
+### 7. Cek Login / Registrasi
+
+Buka halaman `registrasi.php` untuk membuat akun anggota baru, lalu login melalui `login.php` untuk mengakses sistem.
+
+---
+
 # Tabel `anggota`
 
 Dokumentasi struktur tabel `anggota` yang digunakan untuk menyimpan data anggota (mahasiswa) pada sistem.
