@@ -1,0 +1,22 @@
+/* Sidebar styles */
+#sidebar {
+    min-height: 100vh;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+/* Active link */
+.nav-link.active {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+/* Footer stays below content */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+footer {
+    margin-top: auto;
+}
