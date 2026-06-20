@@ -89,3 +89,63 @@ WHERE nim = '21010001';
 DELETE FROM anggota
 WHERE nim = '21010001';
 ```
+
+## Dependency: FPDF (Vendor)
+
+Project ini menggunakan library [FPDF](https://www.fpdf.org/) untuk fitur generate/export PDF. Folder `vendor` **tidak disertakan di repository** (lihat `.gitignore`) karena bisa di-generate ulang dengan mudah. Berikut cara setup-nya.
+
+### Opsi 1: Menggunakan Composer (Disarankan)
+
+Jika project menggunakan Composer, jalankan:
+
+```bash
+composer require setasign/fpdf
+```
+
+Folder `vendor/setasign/fpdf` beserta `composer.json` dan `composer.lock` akan otomatis terbuat. Untuk setup ulang di komputer lain, cukup jalankan:
+
+```bash
+composer install
+```
+
+### Opsi 2: Download Manual
+
+1. Buka halaman download resmi FPDF: [https://www.fpdf.org/en/dl.php?v=186&f=zip](https://www.fpdf.org/en/dl.php?v=186&f=zip)
+2. Extract file zip yang didownload.
+3. Salin folder hasil extract ke dalam folder `vendor/fpdf` pada root project, sehingga strukturnya menjadi:
+
+```
+ORMAWA/
+├── vendor/
+│   └── fpdf/
+│       ├── fpdf.php
+│       ├── font/
+│       └── ...
+├── pages/
+├── koneksi/
+├── index.php
+└── ...
+```
+
+4. Include file utamanya di kode PHP:
+
+```php
+require('vendor/fpdf/fpdf.php');
+
+$pdf = new FPDF();
+$pdf->AddPage();
+$pdf->SetFont('Arial', 'B', 16);
+$pdf->Cell(40, 10, 'Hello World!');
+$pdf->Output();
+```
+
+### Catatan
+
+- Folder `vendor` sebaiknya ditambahkan ke `.gitignore` agar tidak ikut di-commit ke Git, karena:
+  - Ukurannya bisa besar dan tidak perlu disimpan di version control.
+  - Bisa di-generate ulang kapan saja dari Composer atau didownload ulang secara manual.
+- Tambahkan baris berikut ke `.gitignore` jika belum ada:
+
+```
+/vendor/
+```
